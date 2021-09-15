@@ -1,0 +1,36 @@
+---
+- name: Install postgres
+  apt:
+    update_cache: yes
+    state: present
+    pkg:
+      - postgresql
+      - python
+      - python3-pip
+      - libpq-dev
+      - pip
+
+- name: stop postgres
+  service:
+    name: postgresql
+    state: stopped
+
+- name: Create a symbolic link
+  file:
+    src: /var/lib/postgresql/12/bin/*
+    dest: /usr/sbin/*
+    owner: root
+    group: root
+    state: link
+    force: yes
+
+- name: Install packages(pip)
+  pip:
+    state: latest
+    name:
+      - setuptools
+      - psycopg2
+      - psycopg2-binary
+      - patroni
+      - python-consul
+      - python-etcd
