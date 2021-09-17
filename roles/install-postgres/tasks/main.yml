@@ -8,7 +8,6 @@
       - python
       - python3-pip
       - libpq-dev
-      - pip
 
 - name: stop postgres
   service:
@@ -24,11 +23,15 @@
     state: link
     force: yes
 
+- name: Upgrade pip
+  pip:
+    name: setuptools
+    state: latest
+
 - name: Install packages(pip)
   pip:
     state: latest
     name:
-      - setuptools
       - psycopg2
       - psycopg2-binary
       - patroni
