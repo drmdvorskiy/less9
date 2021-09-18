@@ -1,6 +1,18 @@
 ---
-- name: install and configure postgresql
+- name: Install and configure postgresql
   become: true
   hosts: postgresql
   roles:
     - role: install-postgres
+
+- name: Install and configure etcd
+  become: true
+  hosts: etcd
+  roles:
+    - role: install-etcd
+
+- name: Install and configure haproxy
+  become: true
+  hosts: haproxy
+  roles:
+    - role: install-haproxy

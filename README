@@ -1,3 +1,6 @@
 - перейти в директорию с проектом и запустить
 vagrant up
 ansible-playbook -u vagrant -i my.invent --private-key key/id_rsa main.yml
+
+Стенд состоит из etcd, postgresql{1..2} haproxy машин, данный стенд демонстрирует
+автоматическое переключение лидера в кластере patroni при отказе текущего.

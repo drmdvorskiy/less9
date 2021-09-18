@@ -23,7 +23,7 @@
     state: link
     force: yes
 
-- name: Upgrade pip
+- name: Upgrade setuptools
   pip:
     name: setuptools
     state: latest
@@ -37,3 +37,31 @@
       - patroni
       - python-consul
       - python-etcd
+
+- name: Configure patroni.yml
+  template:
+    src: "roles/install-postgres/templates/patroni.yml.j2"
+    dest: /etc/patroni.yml
+
+- name: Create /data/patroni
+  file:
+    path: /data/patroni
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0700'
+
+- name: Configure patroni.service
+  copy:
+    src: "roles/install-postgres/files/patroni.service"
+    dest: /etc/systemd/system/
+
+- name: Start services
+  systemd:
+    daemon_reload: yes
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop:
+    - patroni
+    - postgresql

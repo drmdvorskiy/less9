@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "etcd" do |etcd|
     etcd.vm.box = "ubuntu/focal64"
-    etcd.vm.hostname = "f2"
+    etcd.vm.hostname = "etcd"
     etcd.vm.network "private_network", ip: "192.168.6.3", hostname: true
     etcd.vm.synced_folder ".", "/vagrant", disabled: true
   end
